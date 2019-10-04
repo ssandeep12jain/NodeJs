@@ -1,0 +1,165 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "The Title of your project",
+        "description": "A description of your project",
+        "license": {
+            "name": "Test",
+            "url": "localhost:3000"
+        }
+    },
+    "servers": [
+        {
+            "url": "/",
+            "description": "Local Dev, or from Heroku"
+        },
+        {
+            "url": "/api/",
+            "description": "With docker-compose and nginx proxy"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Contacts",
+            "description": "API for Contacts in the system"
+        }
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/contact": {
+            "get": {
+                "tags": [
+                    "contact"
+                ],
+                "summary": "Get all contacts in system",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                        
+                    }
+                }
+            },
+            "post": {
+               
+                "tags": [
+                    "contact"
+                ],
+                "summary": "Create a new Contact in system",
+                "requestBody": {
+                    "description": "contact object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/contact"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                        
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    }
+                }
+            }
+        },
+        "/contact/{contactId}": {
+            "parameters": [
+                {
+                    "contactId": "contactId",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of the Contact that we want to match",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "contact"
+                ],
+                "summary": "Get Contact with given ID",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "contactId": "contactId",
+                        "required": true,
+                        "description": "Contact with id",
+                        "schema": {
+                            "$ref": "#/definitions/contactId"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/contact"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. contact not found."
+                    }
+                }
+            }
+            
+           
+            
+            
+        }
+    },
+    "definitions": {
+       
+        "contactId": {
+            "properties": {
+                "_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "contact": {
+            "type": "object",
+            "properties": {
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "boolean"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "company": {
+                    "type": "string"
+                }
+
+            }
+        },
+        "Cats": {
+            "type": "object",
+            "properties": {
+                "cats": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/Cat"
+                    }
+                }
+            }
+        }
+    }
+}
